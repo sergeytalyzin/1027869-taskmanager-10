@@ -466,7 +466,7 @@ render(siteMainElement, createBoardTeamplate());
 const siteBoardElements = siteMainElement.querySelector(`.board__tasks`);
 render(siteBoardElements, createTaskEditTeamplate());
 
-new Array(TASK_TIMES).fill('').forEach(()=>render(siteBoardElements, createTaskTeamplate()));
+new Array(TASK_TIMES).fill(``).forEach(()=>render(siteBoardElements, createTaskTeamplate()));
 
 const boardElement = siteMainElement.querySelector(`.board`);
 
