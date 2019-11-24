@@ -2,7 +2,7 @@
 
 const TASK_TIMES = 3;
 
-const createMenuTeamplate = () => {
+const getMenuTeamplate = () => {
   return (
     `<section class="control__btn-wrap">
           <input
@@ -34,7 +34,7 @@ const createMenuTeamplate = () => {
         </section>`
   );
 };
-const createFilterTeamplate = () =>{
+const getFilterTeamplate = () => {
   return (
     `<section class="main__filter filter container">
         <input
@@ -106,7 +106,7 @@ const createFilterTeamplate = () =>{
       </section>`
   );
 };
-const createBoardTeamplate = () => {
+const getBoardTeamplate = () => {
   return (
     `<section class="board container">
         <div class="board__filter-list">
@@ -119,7 +119,7 @@ const createBoardTeamplate = () => {
     </section>`
   );
 };
-const createTaskEditTeamplate = () => {
+const getTaskEditTeamplate = () => {
   return (
     `<article class="card card--edit card--yellow card--repeat">
             <form class="card__form" method="get">
@@ -378,7 +378,7 @@ const createTaskEditTeamplate = () => {
           </article>`
   );
 };
-const createTaskTeamplate = () => {
+const getTaskTeamplate = () => {
   return (
     `<article class="card card--black">
             <div class="card__form">
@@ -447,7 +447,7 @@ const createTaskTeamplate = () => {
           </article>`
   );
 };
-const createLoadButtonTemplate = () => {
+const getLoadButtonTemplate = () => {
   return (`
   <button class="load-more" type="button">load more</button>
   `);
@@ -459,15 +459,15 @@ const render = (container, template, position = `beforeend`) => {
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
-render(siteHeaderElement, createMenuTeamplate());
-render(siteMainElement, createFilterTeamplate());
-render(siteMainElement, createBoardTeamplate());
+render(siteHeaderElement, getMenuTeamplate());
+render(siteMainElement, getFilterTeamplate());
+render(siteMainElement, getBoardTeamplate());
 
 const siteBoardElements = siteMainElement.querySelector(`.board__tasks`);
-render(siteBoardElements, createTaskEditTeamplate());
+render(siteBoardElements, getTaskEditTeamplate());
 
-new Array(TASK_TIMES).fill(``).forEach(()=>render(siteBoardElements, createTaskTeamplate()));
+new Array(TASK_TIMES).fill(``).forEach(() => render(siteBoardElements, getTaskTeamplate()));
 
 const boardElement = siteMainElement.querySelector(`.board`);
 
-render(boardElement, createLoadButtonTemplate());
+render(boardElement, getLoadButtonTemplate());
