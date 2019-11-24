@@ -2,7 +2,7 @@
 
 const TASK_TIMES = 3;
 
-const getMenuTeamplate = () => {
+const getMenuTemplate = () => {
   return (
     `<section class="control__btn-wrap">
           <input
@@ -34,7 +34,7 @@ const getMenuTeamplate = () => {
         </section>`
   );
 };
-const getFilterTeamplate = () => {
+const getFilterTemplate = () => {
   return (
     `<section class="main__filter filter container">
         <input
@@ -106,7 +106,7 @@ const getFilterTeamplate = () => {
       </section>`
   );
 };
-const getBoardTeamplate = () => {
+const getBoardTemplate = () => {
   return (
     `<section class="board container">
         <div class="board__filter-list">
@@ -119,7 +119,7 @@ const getBoardTeamplate = () => {
     </section>`
   );
 };
-const getTaskEditTeamplate = () => {
+const getTaskEditTemplate = () => {
   return (
     `<article class="card card--edit card--yellow card--repeat">
             <form class="card__form" method="get">
@@ -378,7 +378,7 @@ const getTaskEditTeamplate = () => {
           </article>`
   );
 };
-const getTaskTeamplate = () => {
+const getTaskTemplate = () => {
   return (
     `<article class="card card--black">
             <div class="card__form">
@@ -459,14 +459,14 @@ const render = (container, template, position = `beforeend`) => {
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
-render(siteHeaderElement, getMenuTeamplate());
-render(siteMainElement, getFilterTeamplate());
-render(siteMainElement, getBoardTeamplate());
+render(siteHeaderElement, getMenuTemplate());
+render(siteMainElement, getFilterTemplate());
+render(siteMainElement, getBoardTemplate());
 
 const siteBoardElements = siteMainElement.querySelector(`.board__tasks`);
-render(siteBoardElements, getTaskEditTeamplate());
+render(siteBoardElements, getTaskEditTemplate());
 
-new Array(TASK_TIMES).fill(``).forEach(() => render(siteBoardElements, getTaskTeamplate()));
+new Array(TASK_TIMES).fill(``).forEach(() => render(siteBoardElements, getTaskTemplate()));
 
 const boardElement = siteMainElement.querySelector(`.board`);
 
