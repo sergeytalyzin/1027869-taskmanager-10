@@ -1,5 +1,5 @@
 import {getBoardTemplate} from "./components/board.js";
-import {getMenuTemplate} from "./components/site-menu";
+import {getMenuTemplate} from "./components/menu";
 import {getFilterTemplate} from "./components/filter";
 import {getLoadButtonTemplate} from "./components/load-more-button";
 import {getTaskEditTemplate} from "./components/task-edit";
