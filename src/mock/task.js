@@ -7,13 +7,13 @@ const DescriptionItems = [
 ];
 
 const DefaultRepeatingDays = {
-  'mo':false,
-  'tu':false,
-  'we':false,
-  'th':false,
-  'fr':false,
-  'su':false,
-  'sa':false
+  'mo': false,
+  'tu': false,
+  'we': false,
+  'th': false,
+  'fr': false,
+  'su': false,
+  'sa': false
 };
 
 const Tags = [
@@ -25,10 +25,8 @@ const Tags = [
 ];
 
 
-
-
 const getRandomNumber = (min, max) => {
-return min + Math.floor(max * Math.random());
+  return min + Math.floor((max - min) * Math.random());
 };
 
 const getRandomItem = (array) => {
@@ -42,18 +40,18 @@ const getRandomDate = () => {
   const sign = Math.random() > 0.5 ? 1 : -1;
   const diffValue = sign * getRandomNumber(0, 7);
 
-  targetDate.set(targetDate.getDate() + diffValue);
+  targetDate.setDate(targetDate.getDate() + diffValue);
 
   return targetDate;
 };
 
 const generateRepeatingDays = () => {
-  return Object.assign({}, DefaultRepeatingDays,{'mo' : Math.random() > 0.5,
+  return Object.assign({}, DefaultRepeatingDays, {'mo': Math.random() > 0.5,
   });
 };
 
 const generateTags = (tags) => {
-  return tags.filter(() =>  Math.random() > 0.5);
+  return tags.filter(() => Math.random() > 0.5);
 };
 
 const generateTask = () => {
@@ -62,7 +60,7 @@ const generateTask = () => {
     description: getRandomItem(DescriptionItems),
     dueDate,
     repeatingDays: dueDate ? DefaultRepeatingDays : generateRepeatingDays(),
-    tags: new Set (generateTags(Tags)),
+    tags: new Set(generateTags(Tags)),
     color: getRandomItem(Colors),
     isFavorite: Math.random() > 0.5,
     isArchive: Math.random() > 0.5
@@ -76,9 +74,5 @@ const generateTasks = (count) => {
 };
 
 export {generateTasks, generateTask};
-
-
-
-
 
 

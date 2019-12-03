@@ -4,8 +4,13 @@ import {getFilterTemplate} from "./components/filter";
 import {getLoadButtonTemplate} from "./components/load-more-button";
 import {getTaskEditTemplate} from "./components/task-edit";
 import {getTaskTemplate} from "./components/task";
+import {generateFilters} from "./mock/filter";
+import {generateTasks} from "./mock/task";
 
-const TASK_TIMES = 3;
+
+const TASK_TIMES = 22;
+const TASK_INDICATOR = 8;
+const TASK_BUTTON = 4;
 
 const render = (container, template, position = `beforeend`) => {
   container.insertAdjacentHTML(position, template);
@@ -15,14 +20,28 @@ const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
 render(siteHeaderElement, getMenuTemplate());
-render(siteMainElement, getFilterTemplate());
+
+const filters = generateFilters();
+render(siteMainElement, getFilterTemplate(filters));
 render(siteMainElement, getBoardTemplate());
 
 const siteBoardElements = siteMainElement.querySelector(`.board__tasks`);
-render(siteBoardElements, getTaskEditTemplate());
+const tasks = generateTasks(TASK_TIMES);
 
-new Array(TASK_TIMES).fill(``).forEach(() => render(siteBoardElements, getTaskTemplate()));
+render(siteBoardElements, getTaskEditTemplate(tasks[0]));
+let showingTasksCount = TASK_INDICATOR;
 
+tasks.slice(1, showingTasksCount).forEach((task) => render(siteBoardElements, getTaskTemplate(task)));
 const boardElement = siteMainElement.querySelector(`.board`);
-
 render(boardElement, getLoadButtonTemplate());
+
+const loadMoreButton = siteMainElement.querySelector(`.load-more`);
+
+loadMoreButton.addEventListener(`click`, () => {
+  const prevTaskShowing = showingTasksCount;
+  showingTasksCount = showingTasksCount + TASK_BUTTON;
+  tasks.slice(prevTaskShowing, showingTasksCount).forEach((task) => render(siteBoardElements, getTaskTemplate(task)));
+  if (showingTasksCount >= tasks.length) {
+    loadMoreButton.remove();
+  }
+});
