@@ -7,9 +7,7 @@ import LoadMoreButtonComponent from './components/load-more-button.js';
 import TaskEditComponent from './components/task-edit.js';
 import TaskComponent from './components/task.js';
 import {render, RenderPosition} from "./util";
-import SortComponent from './components/sort.js';
 import NoTasksComponent from './components/no-tasks.js';
-import TasksComponent from './components/tasks.js';
 
 
 const TASK_TIMES = 22;
@@ -55,21 +53,17 @@ render(siteHeaderElement, new MenuComponent().getElement(), RenderPosition.BEFOR
 const filters = generateFilters();
 const boardComponent = new BoardComponent();
 render(siteMainElement, new FilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, boardComponent.getElement(), RenderPosition.BEFOREEND);
+
 
 
 const tasks = generateTasks(TASK_TIMES);
 const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
 if (isAllTasksArchived) {
-  render(boardComponent.getElement(), new NoTasksComponent().getElement(), RenderPosition.BEFOREEND);
+  render(siteMainElement, new NoTasksComponent().getElement(), RenderPosition.BEFOREEND);
 } else {
-  render(boardComponent.getElement(), new SortComponent().getElement(), RenderPosition.BEFOREEND);
-  render(boardComponent.getElement(), new TasksComponent().getElement(), RenderPosition.BEFOREEND);
-
+  render(siteMainElement, boardComponent.getElement(), RenderPosition.BEFOREEND);
   const siteBoardElements = boardComponent.getElement().querySelector(`.board__tasks`);
-
-
   let showingTasksCount = TASK_INDICATOR;
 
   tasks.slice(0, showingTasksCount)
