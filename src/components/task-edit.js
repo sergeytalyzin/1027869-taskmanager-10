@@ -1,5 +1,5 @@
 import {Colors, Days, MonthNames} from '../const.js';
-import {formatTime, createElement} from '../util.js';
+import {formatTime} from "../utils/time";
 import AbstractComponent from "./abstract-component";
 
 
@@ -190,6 +190,9 @@ export default class TaskEdit extends AbstractComponent {
   }
   getTemplate() {
     return getTaskEditTemplate(this._task);
+  }
+  setButtonSubmitListener(handler) {
+    this.getElement().addEventListener(`submit`, handler);
   }
 }
 

@@ -6,9 +6,9 @@ import FilterComponent from "./components/filter.js";
 import LoadMoreButtonComponent from './components/load-more-button.js';
 import TaskEditComponent from './components/task-edit.js';
 import TaskComponent from './components/task.js';
-import {render, RenderPosition} from "./util";
+import {render, RenderPosition} from "./utils/render.js";
 import NoTasksComponent from './components/no-tasks.js';
-
+import {replace} from "./utils/render";
 
 const TASK_TIMES = 22;
 const TASK_INDICATOR = 8;
@@ -24,24 +24,23 @@ const renderTask = (element, task) => {
   };
 
   const replaceTaskToEdit = () => {
-    element.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    replace(taskEditComponent, taskComponent);
   };
 
   const replaceEditToTask = () => {
-    element.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+    replace(taskComponent, taskEditComponent);
   };
 
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
-  const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
-  editButton.addEventListener(`click`, () => {
+
+  taskComponent.setButtonListener(() => {
     replaceTaskToEdit();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  const editFrom = taskEditComponent.getElement().querySelector(`form`);
-  editFrom.addEventListener(`submit`, replaceEditToTask);
+  taskEditComponent.setButtonSubmitListener(replaceEditToTask);
 
   render(element, taskComponent.getElement(), RenderPosition.BEFOREEND);
 };

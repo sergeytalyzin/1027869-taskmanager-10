@@ -3,18 +3,6 @@ const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-const castTimeFormat = (value) => {
-  return value < 10 ? `0${value}` : String(value);
-};
-
-const formatTime = (date) => {
-  const hours = castTimeFormat(date.getHours() % 12);
-  const minutes = castTimeFormat(date.getMinutes());
-
-  const interval = date.getHours() > 11 ? `pm` : `am`;
-
-  return `${hours}:${minutes} ${interval}`;
-};
 
 const createElement = (template) => {
   const newElement = document.createElement(`div`);
@@ -34,4 +22,16 @@ const render = (container, element, place) => {
   }
 };
 
-export {render, formatTime, createElement, RenderPosition};
+const replace = (newComponent, oldComponent) => {
+  const parentElement = oldComponent.getElement().parentElement;
+  const newElement = newComponent.getElement();
+  const oldElement = oldComponent.getElement();
+
+  const isExistElements = !!(parentElement && newElement && oldElement);
+  if (isExistElements && parentElement.contains(oldElement)) {
+    parentElement.replaceChild(newElement, oldElement);
+  }
+};
+
+
+export {createElement, render, replace,RenderPosition}
