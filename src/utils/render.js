@@ -34,4 +34,4 @@ const replace = (newComponent, oldComponent) => {
 };
 
 
-export {createElement, render, replace,RenderPosition}
+export {createElement, render, replace, RenderPosition};
