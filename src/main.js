@@ -53,9 +53,6 @@ render(siteHeaderElement, new MenuComponent().getElement(), RenderPosition.BEFOR
 const filters = generateFilters();
 const boardComponent = new BoardComponent();
 render(siteMainElement, new FilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
-
-
-
 const tasks = generateTasks(TASK_TIMES);
 const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
