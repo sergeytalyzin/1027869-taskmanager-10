@@ -24,17 +24,17 @@ const renderTask = (element, task) => {
   const replaceEditToTask = () => {
     replace(taskComponent, taskEditComponent);
   };
+  const onEscPress = () => {
+    document.addEventListener(`keydown`, onEscKeyDown);
+  };
 
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
 
-  taskComponent.setButtonListener(() => {
-    replaceTaskToEdit();
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
-
-  taskEditComponent.setButtonSubmitListener(replaceEditToTask);
+  taskComponent.setEditButtonListener(replaceTaskToEdit);
+  taskComponent.setEditButtonListener(onEscPress);
+  taskEditComponent.setFormSubmitListener(replaceEditToTask);
 
   render(element, taskComponent.getElement(), RenderPosition.BEFOREEND);
 };
@@ -47,8 +47,6 @@ const renderTasks = (element, tasks) => {
 
 export default class BoardController {
   constructor() {
-
-
     this._noTasksComponent = new NoTasksComponent();
     this._boardComponent = new BoardComponent();
     this._loadMoreButtonComponent = new LoadMoreButtonComponent();
