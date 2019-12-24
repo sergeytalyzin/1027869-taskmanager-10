@@ -11,7 +11,7 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-const render = (container, element, place) => {
+const render = (container, element, place = RenderPosition.BEFOREEND) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN :
       container.prepend(element);
@@ -20,6 +20,11 @@ const render = (container, element, place) => {
       container.append(element);
       break;
   }
+};
+
+const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
 };
 
 const replace = (newComponent, oldComponent) => {
@@ -34,4 +39,4 @@ const replace = (newComponent, oldComponent) => {
 };
 
 
-export {createElement, render, replace, RenderPosition};
+export {createElement, render, remove, replace, RenderPosition};

@@ -79,24 +79,6 @@ const getTaskTemplate = (task) => {
   );
 };
 
-/* export default class Task {
-  constructor(task) {
-    this._task = task;
-
-    this._element = null;
-  }
-
-  getTemplate() {
-    return getTaskTemplate(this._task);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-}*/
-
 export default class Task extends AbstractComponent {
   constructor(task) {
     super();
