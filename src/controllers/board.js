@@ -70,7 +70,7 @@ export default class BoardController {
         }
       });
     };
-  const siteMainElement = document.querySelector(`.main`);
+    const siteMainElement = document.querySelector(`.main`);
 
     const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
