@@ -89,17 +89,17 @@ export default class BoardController {
 
       switch (sortType) {
         case SortType.DATE_UP :
-          sortedTasks = tasks.slice().sort((a,b) => a.dueDate - b.dueDate);
+          sortedTasks = tasks.slice().sort((a, b) => a.dueDate - b.dueDate);
           break;
         case SortType.DATE_DOWN :
-          sortedTasks = tasks.slice().sort((a,b) => b.dueDate - a.dueDate);
+          sortedTasks = tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
           break;
         case SortType.DEFAULT:
           sortedTasks = tasks.slice(0, showingTasksCount);
           break;
       }
       siteBoardElements.innerHTML = ``;
-      renderTasks(siteBoardElements,sortedTasks);
+      renderTasks(siteBoardElements, sortedTasks);
       if (sortType === SortType.DEFAULT) {
         renderLoadMoreButton();
       } else {
