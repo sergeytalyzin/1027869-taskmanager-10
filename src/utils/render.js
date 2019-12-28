@@ -33,7 +33,7 @@ const replace = (newComponent, oldComponent) => {
   const parentElement = oldElement.parentElement;
   const newElement = newComponent.getElement();
 
-  if (parentElement && parentElement.contains(oldElement)) {
+  if (parentElement) {
     parentElement.replaceChild(newElement, oldElement);
   }
 };
