@@ -1,4 +1,4 @@
-import {createElement} from "../util";
+import AbstractComponent from "./abstract-component";
 
 const getBoardTemplate = () => {
   return (
@@ -14,19 +14,11 @@ const getBoardTemplate = () => {
   );
 };
 
-export default class Board {
+export default class Board extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
-
   getTemplate() {
     return getBoardTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
   }
 }

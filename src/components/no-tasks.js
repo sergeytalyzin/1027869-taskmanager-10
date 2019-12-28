@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import AbstractComponent from "./abstract-component";
 
 const getNoTasksTemplate = () => {
   return (
@@ -11,24 +11,11 @@ const getNoTasksTemplate = () => {
 };
 
 
-export default class NoTasks {
+export default class NoTasks extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
-
   getTemplate() {
     return getNoTasksTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
