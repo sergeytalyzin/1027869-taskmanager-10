@@ -3,13 +3,19 @@ import TaskComponent from "../components/task";
 import TaskEditComponent from "../components/task-edit";
 
 const ESCAPE_KEY = 27;
+const Mode = {
+  DEFAULT: `default`,
+  EDIT: `edit`,
+};
 
 export default class TaskController {
-  constructor(element, onDataChange) {
+  constructor(element, onDataChange, onViewChange) {
     this._element = element;
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
     this._taskComponent = null;
     this._taskEditComponent = null;
+    this._mode = Mode.DEFAULT;
     this._replaceEditToTask = this._replaceEditToTask.bind(this);
     this._replaceTaskToEdit = this._replaceTaskToEdit.bind(this);
   }
@@ -49,10 +55,21 @@ export default class TaskController {
       render(this._element, taskComponent.getElement(), RenderPosition.BEFOREEND);
     }
   }
+
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceEditToTask();
+    }
+  }
   _replaceTaskToEdit() {
+    this._onViewChange();
+
     replace(this._taskEditComponent, this._taskComponent);
+    this._mode = Mode.EDIT;
   }
   _replaceEditToTask() {
+    this._taskEditComponent.reset();
     replace(this._taskComponent, this._taskEditComponent);
+    this._mode = Mode.DEFAULT;
   }
 }
