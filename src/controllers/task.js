@@ -18,16 +18,11 @@ export default class TaskController {
     this._mode = Mode.DEFAULT;
     this._replaceEditToTask = this._replaceEditToTask.bind(this);
     this._replaceTaskToEdit = this._replaceTaskToEdit.bind(this);
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
   render(task) {
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === ESCAPE_KEY) {
-        this._replaceEditToTask();
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
     const onEscPress = () => {
-      document.addEventListener(`keydown`, onEscKeyDown);
+      document.addEventListener(`keydown`, this._onEscKeyDown);
     };
 
     const oldTaskComponent = this._taskComponent;
@@ -59,6 +54,7 @@ export default class TaskController {
   setDefaultView() {
     if (this._mode !== Mode.DEFAULT) {
       this._replaceEditToTask();
+      document.removeEventListener(`keydown`, this._onEscKeyDown);
     }
   }
   _replaceTaskToEdit() {
@@ -71,5 +67,12 @@ export default class TaskController {
     this._taskEditComponent.reset();
     replace(this._taskComponent, this._taskEditComponent);
     this._mode = Mode.DEFAULT;
+  }
+
+  _onEscKeyDown(evt)  {
+    if (evt.keyCode === ESCAPE_KEY) {
+      this._replaceEditToTask();
+      document.removeEventListener(`keydown`, this._onEscKeyDown);
+    }
   }
 }
