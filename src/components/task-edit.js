@@ -1,5 +1,5 @@
-import {Colors, Days, MonthNames} from '../const.js';
-import {formatTime} from "../utils/time";
+import {Colors, Days} from '../const.js';
+import {formatTime, formatDate} from "../utils/time";
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/light.css';
@@ -88,7 +88,7 @@ export const getTaskEditTemplate = (task, options = {}) => {
     (isRepeatingTask && !isRepeating(activeRepeatingDays));
 
 
-  const date = isDateShowing ? `${dueDate.getDate()} ${MonthNames[dueDate.getMonth()]}` : ``;
+  const date = isDateShowing ? formatDate(dueDate) : ``;
   const time = isDateShowing ? formatTime(dueDate) : ``;
   const repeatClass = isRepeatingTask ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
@@ -106,7 +106,7 @@ export const getTaskEditTemplate = (task, options = {}) => {
                 <use xlink:href="#wave"></use>
               </svg>
             </div>
-  
+
             <div class="card__textarea-wrap">
               <label>
                 <textarea
@@ -116,14 +116,14 @@ export const getTaskEditTemplate = (task, options = {}) => {
                 >${description}</textarea>
               </label>
             </div>
-  
+
             <div class="card__settings">
               <div class="card__details">
                 <div class="card__dates">
                   <button class="card__date-deadline-toggle" type="button">
                     date: <span class="card__date-status">${isDateShowing ? `yes` : `no`}</span>
                   </button>
-  
+
                   ${
     isDateShowing ?
       `<fieldset class="card__date-deadline">
@@ -139,11 +139,11 @@ export const getTaskEditTemplate = (task, options = {}) => {
                       </fieldset>`
       : ``
     }
-  
+
                   <button class="card__repeat-toggle" type="button">
                     repeat:<span class="card__repeat-status">${isRepeatingTask ? `yes` : `no`}</span>
                   </button>
-  
+
                   ${
     isRepeatingTask ?
       `<fieldset class="card__repeat-days">
@@ -154,12 +154,12 @@ export const getTaskEditTemplate = (task, options = {}) => {
       : ``
     }
                 </div>
-  
+
                 <div class="card__hashtag">
                   <div class="card__hashtag-list">
                     ${tagsMarkup}
                   </div>
-  
+
                   <label>
                     <input
                       type="text"
@@ -170,7 +170,7 @@ export const getTaskEditTemplate = (task, options = {}) => {
                   </label>
                 </div>
               </div>
-  
+
               <div class="card__colors-inner">
                 <h3 class="card__colors-title">Color</h3>
                 <div class="card__colors-wrap">
@@ -178,7 +178,7 @@ export const getTaskEditTemplate = (task, options = {}) => {
                 </div>
               </div>
             </div>
-  
+
             <div class="card__status-btns">
               <button class="card__save" type="submit" ${isBlockSaveButton ? `disabled` : ``}>save</button>
               <button class="card__delete" type="button">delete</button>
