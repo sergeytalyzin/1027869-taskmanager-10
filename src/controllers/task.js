@@ -69,7 +69,7 @@ export default class TaskController {
     this._mode = Mode.DEFAULT;
   }
 
-  _onEscKeyDown(evt)  {
+  _onEscKeyDown(evt) {
     if (evt.keyCode === ESCAPE_KEY) {
       this._replaceEditToTask();
       document.removeEventListener(`keydown`, this._onEscKeyDown);
