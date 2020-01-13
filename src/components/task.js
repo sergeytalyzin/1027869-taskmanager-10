@@ -16,7 +16,7 @@ const createHashtagsMarkup = (tags) => {
 };
 
 const getTaskTemplate = (task) => {
-  const {description, tags, dueDate, color, repeatingDays} = task;
+  const {description, tags, dueDate, color, repeatingDays, isFavorite, isArchive} = task;
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
 
@@ -52,7 +52,10 @@ const getTaskTemplate = (task) => {
                 </div>
 
                 <div class="card__textarea-wrap">
-                  <p class="card__text">${description}</p>
+                  <p class="card__text">${description} <br>
+                  ${ isArchive ? `<img src="https://pbs.twimg.com/media/EKEtcNVXYAIQPTU.jpg" width="30" height="30"> ` : ``}
+                    ${ isFavorite ? `<img src="https://favorit-motors.ru/bitrix/templates/favorit_motors_main_v2/assets/img/favorit-big.png" width="30" height="30"> ` : ``}
+                  </p>
                 </div>
 
                 <div class="card__settings">
@@ -89,5 +92,11 @@ export default class Task extends AbstractComponent {
   }
   setEditButtonListener(handler) {
     this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, handler);
+  }
+  setArchiveButtonListener(handler) {
+    this.getElement().querySelector(`.card__btn--archive`).addEventListener(`click`, handler);
+  }
+  setFavoritesButtonListener(handler) {
+    this.getElement().querySelector(`.card__btn--favorites`).addEventListener(`click`, handler);
   }
 }
