@@ -18,13 +18,15 @@ const renderTasks = (element, tasks, onDataChange, onViewChange) => {
 };
 
 export default class BoardController {
-  constructor() {
+  constructor(tasksModel) {
+    this._tasksModel = tasksModel;
+
     this._showedTaskControllers = [];
     this._noTasksComponent = new NoTasksComponent();
     this._boardComponent = new BoardComponent();
     this._sortComponent = new Sort();
     this._loadMoreButtonComponent = new LoadMoreButtonComponent();
-    this._tasks = [];
+
     this._showingTasksCount = TASK_INDICATOR;
     this._siteBoardElements = null;
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
@@ -33,8 +35,8 @@ export default class BoardController {
     this._onViewChange = this._onViewChange.bind(this);
   }
 
-  render(tasks) {
-    this._tasks = tasks;
+  render() {
+    const tasks = this._tasksModel.getTasks();
 
     const siteMainElement = document.querySelector(`.main`);
 
@@ -56,16 +58,17 @@ export default class BoardController {
   }
   _onSortTypeChange(sortType) {
     let sortedTasks = [];
-
+    const tasks = this._tasksModel.getTasks();
+    
     switch (sortType) {
       case SortType.DATE_UP :
-        sortedTasks = this._tasks.slice().sort((a, b) => a.dueDate - b.dueDate);
+        sortedTasks = tasks.slice().sort((a, b) => a.dueDate - b.dueDate);
         break;
       case SortType.DATE_DOWN :
-        sortedTasks = this._tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
+        sortedTasks = tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
         break;
       case SortType.DEFAULT:
-        sortedTasks = this._tasks.slice(0, this._showingTasksCount);
+        sortedTasks = tasks.slice(0, this._showingTasksCount);
         break;
     }
     this._siteBoardElements.innerHTML = ``;
@@ -80,28 +83,27 @@ export default class BoardController {
   }
 
   _renderLoadMoreButton() {
-    if (this._showingTasksCount >= this._tasks.length) {
+    if (this._showingTasksCount >= this._tasksModel.getTasks().length) {
       return;
     }
     render(this._boardComponent.getElement(), this._loadMoreButtonComponent.getElement());
     this._loadMoreButtonComponent._setClickLoadMore(() => {
       const prevTaskShowing = this._showingTasksCount;
       this._showingTasksCount = this._showingTasksCount + TASK_BUTTON;
-      const newTasks = renderTasks(this._siteBoardElements, this._tasks.slice(prevTaskShowing, this._showingTasksCount), this._onDataChange, this._onViewChange);
+      const newTasks = renderTasks(this._siteBoardElements, this._tasksModel.getTasks().slice(prevTaskShowing, this._showingTasksCount), this._onDataChange, this._onViewChange);
       this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
-      if (this._showingTasksCount >= this._tasks.length) {
+      if (this._showingTasksCount >= this._tasksModel.getTasks().length) {
         remove(this._loadMoreButtonComponent);
       }
     });
   }
   _onDataChange(taskController, oldData, newData) {
-    const index = this._tasks.findIndex((it) => it === oldData);
-    if (index === -1) {
-      return;
-    }
-    this._tasks = [].concat(this._tasks.slice(0, index), newData, this._tasks.slice(index + 1));
+    const isSuccess = this._tasksModel.updateTask(oldData.id, newData);
 
-    taskController.render(this._tasks[index]);
+    if (isSuccess) {
+
+      taskController.render(newData);
+    }
   }
   _onViewChange() {
     this._showedTaskControllers.forEach((it) => it.setDefaultView());
